@@ -1,27 +1,30 @@
+import sys
 from pypdf import PdfReader
 
+from parser import (
+    prepare_text,
+    extract_meta_data
+)
+
 def main():
-    print("Hello from rw-order-conf-to-csv!")
+    if len(sys.argv) < 2:
+        raise Exception("Error: order confirmation not provided")
+        sys.exit(1)
+    order_conf = sys.argv[1]
+    if not order_conf.endswith(".pdf"):
+        raise Exception("Error: order confirmation not a pdf")
+        sys.exit(1)
 
-    reader = PdfReader("pdf/2814801 Red Wing Order Confirmation (2).pdf")
-    print(len(reader.pages))
-    page = reader.pages[0]
-    print(page.extract_text())
-
-    # Identify meta data (Order no., Order dt., Your PO#))
-    # Identify first row (Each row contains 3 rows)
-    # Row examples:
-    """
-    96356 SML PR5 24.00 120.00
-    INSOLE, LEATHER W/FOAM
-    Available
-    """
-    """
-    03590 H 110 PR1 188.00 188.00
-
-    Available
-    """
-    # Transform each row to csv
+    reader = PdfReader(order_conf)
+    output_csv_text = ""
+    if len(reader.pages) == 0:
+        raise Exception("Error: order confirmation have no pages")
+        sys.exit(1)
+    first_page = reader.pages[0]
+    meta_data = extract_meta_data(first_page.extract_text())
+    for page in reader.pages:
+        raw_text = page.extract_text()
+        prepared_text = prepare_text(raw_text)
 
 
 if __name__ == "__main__":
