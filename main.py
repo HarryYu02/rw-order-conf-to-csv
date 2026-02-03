@@ -12,7 +12,8 @@ def main():
     if "--help" in sys.argv or "-h" in sys.argv:
         print("Usage: uv run main.py [options] <input> <output_dir>")
         print("Options:")
-        print("  -h, --help    Show this message")
+        print("  -h, --help         Show this message")
+        print("  -a, --aggregate    Aggregate output to 1 single file")
         sys.exit(0)
 
     is_aggregate = False
