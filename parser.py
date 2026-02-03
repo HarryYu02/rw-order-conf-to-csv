@@ -7,13 +7,6 @@ class MetaData:
         self.order_date = order_date
         self.po_num = po_num
 
-def extract_meta_data(raw_text):
-    rows = raw_text.split("\n")
-    order_date = rows[0][:6]
-    order_num = rows[0][6:]
-    po_num = rows[2].split()[0]
-    return MetaData(order_num, order_date, po_num)
-
 class Entry:
     def __init__(self, style_id, style_name, size, quantity, unit, status, net_price, total_price):
         self.style_id = style_id
@@ -27,6 +20,14 @@ class Entry:
 
     def __repr__(self):
         return f"{self.style_id} | {self.style_name} | {self.size} | {self.quantity} | {self.unit} | {self.status} | {self.net_price} | {self.total_price}"
+
+
+def extract_meta_data(raw_text):
+    rows = raw_text.split("\n")
+    order_date = rows[0][:6]
+    order_num = rows[0][6:]
+    po_num = rows[2].split()[0]
+    return MetaData(order_num, order_date, po_num)
 
 def is_start_of_entry(row):
     # row is start of entry if ends with 2 number (net price and amount)
@@ -44,7 +45,7 @@ def parse_entry(entry_rows):
             # 03590 H 105 PR1 188.00 188.00
             length = f"{first_row_words[2][:2]}.{first_row_words[2][2:]}"
             width = first_row_words[1]
-            size = f"{length}{width}"
+            size = f"{length} {width}"
         case 5:
             # 96356 XLG PR12 24.00 288.00
             size = first_row_words[1]
