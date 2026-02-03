@@ -1,16 +1,15 @@
 # Red Wing Shoes order confirmations to csv
 
-This is a script that convert CE Order Confirmations from Red Wing Shoes to CSV for data entry purposes.
+This is a cli script that convert CE Order Confirmations from Red Wing Shoes to CSV for data entry purposes.
 
-1. Read order confirmation (pypdf)
-2. Identify meta data (Order no., Order dt., Your PO#))
-3. Identify first row (Each row contains 3 rows)
-```
-96356 SML PR5 24.00 120.00
-INSOLE, LEATHER W/FOAM
-Available
-03590 H 110 PR1 188.00 188.00
+## Usage
 
-Available
+```bash
+uv run main.py <input_file> <output_dir> # single convert
+uv run main.py <input_dir> <output_dir>  # bulk convert
 ```
-4. Transform each row to csv
+
+## Requirements
+
+- uv >= 0.9
+- python >= 3.13

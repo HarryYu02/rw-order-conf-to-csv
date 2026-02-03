@@ -65,11 +65,13 @@ def main():
             e.net_price,
             e.total_price
         ], data))
-        # TODO: check if file exist
-        with open(output_location, "x", newline="", encoding="utf-8-sig") as f:
-            writer = csv.writer(f)
-            writer.writerow(headers)
-            writer.writerows(formatted_data)
+        if os.path.exists(output_location):
+            print(f"{output_location} already exists, skipping {file}...")
+        else:
+            with open(output_location, "x", newline="", encoding="utf-8-sig") as f:
+                writer = csv.writer(f)
+                writer.writerow(headers)
+                writer.writerows(formatted_data)
 
 
 if __name__ == "__main__":
