@@ -9,11 +9,19 @@ from parser import (
 )
 
 def main():
-    # usage: uv run main.py <input> <output_dir>
-    if len(sys.argv) < 3:
+    if "--help" in sys.argv or "-h" in sys.argv:
+        print("Usage: uv run main.py [options] <input> <output_dir>")
+        print("Options:")
+        print("  -h, --help    Show this message")
+        sys.exit(0)
+
+    args = [a for a in sys.argv[1:] if not a.startswith("-")]
+
+    if len(args) < 2:
         raise Exception("Error: invalid arguments")
         sys.exit(1)
-    input = sys.argv[1]
+
+    input = args[0]
     files_to_parse = []
     if os.path.isfile(input):
         files_to_parse.append(input)
@@ -24,7 +32,7 @@ def main():
         raise Exception("Error: invalid input")
         sys.exit(1)
 
-    output_dir = sys.argv[2]
+    output_dir = args[1]
     if not os.path.isdir(output_dir):
         raise Exception("Error: invalid output directory")
         sys.exit(1)
