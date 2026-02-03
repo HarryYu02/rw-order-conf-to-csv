@@ -1,5 +1,7 @@
 # Red Wing Shoes order confirmations to csv
 
+This is a script that convert CE Order Confirmations from Red Wing Shoes to CSV for data entry purposes.
+
 1. Read order confirmation (pypdf)
 2. Identify meta data (Order no., Order dt., Your PO#))
 3. Identify first row (Each row contains 3 rows)
